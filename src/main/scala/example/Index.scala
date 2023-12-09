@@ -47,6 +47,10 @@ object Main {
     )
     println(s"My favorite beverage is ${me.like.drink} !")
 
+    // もちろん、Scalaの標準ライブラリも利用できる
+    val x = (0 to 50).toSeq.map(_ * 2).reduce(_ + _)
+    println(s"sum of 0 to 100 is ${x}")
+
     // npmライブラリを呼べる
     import npm.awsCryptoSha256Js.mod.Sha256
 
