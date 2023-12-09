@@ -2,10 +2,13 @@ package example
 
 import com.github.tarao.record4s.%
 
+import scala.concurrent.Await
 import scala.concurrent.Future
 import scala.scalajs.js
 import scala.scalajs.js.Promise
 import scala.scalajs.js.annotation._
+import scala.util.Failure
+import scala.util.Success
 
 // 入出力のデモ
 
@@ -22,6 +25,7 @@ trait Context extends js.Object {
 }
 
 object Main {
+  // indexモジュール内のhandlerとしてexportする必要があるのでここで指定する
   @JSExportTopLevel(name = "handler", moduleID = "index")
   def handler(event: Event, context: Context): Promise[String] = { // you need paren even if you don't need args
     import concurrent.ExecutionContext.Implicits.global
@@ -52,6 +56,20 @@ object Main {
       s256.digest().toFuture.map(_.toSeq.map(_.toString).mkString(" "))
     digest.andThen(d => println(s"SHA256 is $d"))
 
-    return Future("Hello, response!").toJSPromise
+    // npmライブラリを呼べる 2
+    import npm.axios.mod.default as axios
+    import npm.axios.mod.AxiosResponse
+    val got: Promise[AxiosResponse[String, ?]] =
+      axios.get("https://example.com")
+    val showResult = got.`then` { (r) =>
+      println(r.data)
+    }.toFuture
+
+    val all = for {
+      _ <- showResult
+    } yield "Hello, response!"
+
+    // レスポンスするにはPromiseを返せばよい
+    return all.toJSPromise
   }
 }

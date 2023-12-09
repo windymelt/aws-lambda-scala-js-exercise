@@ -26,5 +26,8 @@ lazy val root = project
       baseDirectory.value
     },
     stOutputPackage := "npm",
-    Compile / stMinimize := Selection.AllExcept("@aws-crypto/sha256-js"),
+    Compile / stMinimize := Selection.AllExcept(
+      "@aws-crypto/sha256-js",
+      "axios"
+    ),
   )
