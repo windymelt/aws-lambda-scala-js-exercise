@@ -15,7 +15,6 @@ lazy val root = project
 
     scalaJSLinkerConfig ~= {
       _.withModuleKind(ModuleKind.CommonJSModule)
-        .withOutputPatterns(OutputPatterns.fromJSFile("%s.js"))
     },
     libraryDependencies ++= Seq(
       "org.scala-js" %%% "scalajs-dom" % "2.4.0",
