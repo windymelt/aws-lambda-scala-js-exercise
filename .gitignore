@@ -4,3 +4,5 @@
 .metals/
 node_modules/
 target/
+lambda/
+lambda.zip
