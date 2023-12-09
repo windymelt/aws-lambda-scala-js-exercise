@@ -1,5 +1,4 @@
 import org.scalajs.linker.interface.ModuleSplitStyle
-import org.scalajs.linker.interface.OutputPatterns
 import scala.sys.process.Process
 
 lazy val root = project
@@ -17,7 +16,6 @@ lazy val root = project
       _.withModuleKind(ModuleKind.CommonJSModule)
     },
     libraryDependencies ++= Seq(
-      "org.scala-js" %%% "scalajs-dom" % "2.4.0",
       "com.github.tarao" %%% "record4s" % "0.9.1"
     ),
     externalNpm := {
